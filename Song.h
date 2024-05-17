@@ -26,7 +26,8 @@ struct LicenseTicket {
     string hash; // Hash tiket lisensi
 };
 
-void printSong(const Song& song);
+void playSong(const Song& song);
+
 class SongList {
     private:
         SongNode* head;
@@ -42,6 +43,7 @@ class SongList {
         void sortSongs(bool ascending = true);
         SongNode* getSongNode(int songId);
         Song* getSong(int songId);
+        void playingSong(string& title);
         int getSize();
         SongNode* getHead();
 };
