@@ -13,6 +13,11 @@ struct Song {
     MerkleTree merkleTree; // Merkle Hash Tree untuk lagu ini
 };
 
+struct SongNode {
+    Song song;
+    SongNode* next;
+};
+
 struct LicenseTicket {
     int songId;
     int userId;
@@ -21,4 +26,23 @@ struct LicenseTicket {
     string hash; // Hash tiket lisensi
 };
 
+void printSong(const Song& song);
+class SongList {
+    private:
+        SongNode* head;
+        SongNode* tail;
+        int size;
+    public:
+        SongList();
+        ~SongList();
+        void addSong(Song& song);
+        void removeSong(int songId);
+        void printSongs();
+        SongNode* searchSong(const string& title);
+        void sortSongs(bool ascending = true);
+        SongNode* getSongNode(int songId);
+        Song* getSong(int songId);
+        int getSize();
+        SongNode* getHead();
+};
 #endif

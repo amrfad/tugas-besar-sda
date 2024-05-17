@@ -4,6 +4,7 @@
 #include <vector>
 #include <sstream>
 #include <iomanip>
+#include <stdint.h>
 using namespace std;
 
 extern const int a,b,c,d,e,f,g,h;
