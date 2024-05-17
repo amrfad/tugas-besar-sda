@@ -1,17 +1,25 @@
 #include "MerkleTree.h"
 
-// 
+// Metode konstruktor
 MerkleTree::MerkleTree()
 {
     root = NULL;
 }
 
-// 
+// Metode destruktor
 MerkleTree::~MerkleTree(){
     delete root;
 }
 
-// 
+// Metode untuk menambahkan leaf ke dalam tree
+void MerkleTree::addLeaf(string hash)
+{
+    MerkleNode* newLeaf = new MerkleNode();
+    newLeaf->hash = hash;
+    leaves.push_back(newLeaf);
+}
+
+// Metode untuk melakukan hashing pada setiap blok data file
 void MerkleTree::hashFileBlock(string file_path)
 {
     // Buka file dalam mode biner
@@ -37,14 +45,12 @@ void MerkleTree::hashFileBlock(string file_path)
         size_t end = min(start + block_size, buffer.size());
         size_t length = end - start;
         string hash = sha256(buffer.data() + start, length);
-        MerkleNode* newLeaf = new MerkleNode();
-        newLeaf->hash = hash;
-        leaves.push_back(newLeaf);
+        addLeaf(hash);
         // cout << "Block " << i + 1 << " hash: " << hash << endl;
     }
 };
 
-// 
+// Metode untuk membangun tree dari daftar leaf
 MerkleNode* MerkleTree::buildTree() {
     if (leaves.empty()) return nullptr;
 
@@ -71,7 +77,7 @@ MerkleNode* MerkleTree::buildTree() {
     root = level.front();
 }
 
-// 
+// Metode untuk menghitung hash pada setiap node
 void MerkleTree::calculateHash(MerkleNode* node) {
     if (node == NULL) return;
     calculateHash(node->left);
@@ -84,12 +90,12 @@ void MerkleTree::calculateHash(MerkleNode* node) {
     }
 }
 
-//
+// Metode untuk mengembalikan hash pada root node
 string MerkleTree::getRootHash() {
     return root->hash;;
 }
 
-//
+// Metode untuk memverifikasi hash
 bool MerkleTree::verifyHash(string hash, string proof) {
     return (hash == proof);
 }
