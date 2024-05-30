@@ -4,13 +4,13 @@
 #include <string>
 #include <vector>
 #include "Song.h"
-using namespace std;
+// using namespace std;
 
 struct User {
     int userId;
-    string name;
-    string password;
-    vector<LicenseTicket> licenses; // Daftar tiket lisensi yang dimiliki pengguna
+    std::string name;
+    std::string password;
+    std::vector<LicenseTicket> licenses; // Daftar tiket lisensi yang dimiliki pengguna
 };
 
 #endif

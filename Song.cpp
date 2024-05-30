@@ -55,17 +55,17 @@ void SongList::removeSong(int songId) {
 void SongList::printSongs() {
     SongNode* current = head;
     while (current != NULL) {
-        cout << "ID: " << current->song.songId << endl;
-        cout << "Title: " << current->song.title << endl;
-        cout << "Artist: " << current->song.artist << endl;
-        cout << "Hash: " << current->song.hash << endl;
-        cout << "Merkle Tree: " << endl;
-        cout << endl;
+        std::cout << "ID: " << current->song.songId << std::endl;
+        std::cout << "Title: " << current->song.title << std::endl;
+        std::cout << "Artist: " << current->song.artist << std::endl;
+        std::cout << "Hash: " << current->song.hash << std::endl;
+        std::cout << "Merkle Tree: " << std::endl;
+        std::cout << std::endl;
         current = current->next;
     }
 }
 
-SongNode* SongList::searchSong(const string& title) {
+SongNode* SongList::searchSong(const std::string& title) {
     SongNode* current = head;
     while (current != NULL) {
         if (current->song.title == title) {
@@ -158,7 +158,7 @@ SongNode* SongList::getHead() {
     return head;
 }
 
-void SongList::playingSong(string& title) {
+void SongList::playingSong(std::string& title) {
     SongNode* current = head;
     while (current != NULL) {
         if (current->song.title == title) {
@@ -170,6 +170,6 @@ void SongList::playingSong(string& title) {
 }
 
 void playSong(const Song& song) {
-    cout << "Playing " << song.title << " by " << song.artist << endl;
+    std::cout << "Playing " << song.title << " by " << song.artist << std::endl;
     // PlaySound(song.title.c_str(), NULL, SND_FILENAME | SND_ASYNC);
 }

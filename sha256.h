@@ -5,7 +5,7 @@
 #include <sstream>
 #include <iomanip>
 #include <stdint.h>
-using namespace std;
+// using namespace std;
 
 extern const int a,b,c,d,e,f,g,h;
 
@@ -40,7 +40,7 @@ void round(uint32_t (&H)[8], uint32_t round_constant, uint32_t schedule_word);
 void compress_block(uint32_t (&H)[8], uint8_t (&block)[64]);
 
 // Fungsi utama untuk menghitung hash dari blok data
-string sha256(uint8_t* data, size_t length);
-string sha256(string m);
+std::string sha256(uint8_t* data, size_t length);
+std::string sha256(std::string m);
 
 #endif

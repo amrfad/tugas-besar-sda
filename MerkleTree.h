@@ -8,11 +8,11 @@
 #include <fstream>
 #include <iostream>
 #include "sha256.h"
-using namespace std;
+// using namespace std;
 
 struct MerkleNode
 {
-    string hash = "";
+    std::string hash = "";
     MerkleNode *left = NULL;
     MerkleNode *right = NULL;
 };
@@ -23,17 +23,17 @@ public:
     MerkleNode *root;
 
 private:
-    vector<MerkleNode *> leaves;
+    std::vector<MerkleNode *> leaves;
 
 public:
     MerkleTree();
     ~MerkleTree();
-    void addLeaf(string hash);
-    void hashFileBlock(string file_path);
+    void addLeaf(std::string hash);
+    void hashFileBlock(std::string file_path);
     MerkleNode *buildTree();
     void calculateHash(MerkleNode *node);
-    string getRootHash();
-    bool verifyHash(string hash, string proof);
+    std::string getRootHash();
+    bool verifyHash(std::string hash, std::string proof);
 };
 
 #endif

@@ -5,13 +5,13 @@
 #include "MerkleTree.h"
 #include <windows.h>
 #include <mmsystem.h>
-using namespace std;
+// using namespace std;
 
 struct Song {
     int songId;
-    string title;
-    string artist;
-    string hash; // Hash lagu
+    std::string title;
+    std::string artist;
+    std::string hash; // Hash lagu
     MerkleTree merkleTree; // Merkle Hash Tree untuk lagu ini
 };
 
@@ -23,9 +23,9 @@ struct SongNode {
 struct LicenseTicket {
     int songId;
     int userId;
-    string purchaseDate;
-    string expirationDate;
-    string hash; // Hash tiket lisensi
+    std::string purchaseDate;
+    std::string expirationDate;
+    std::string hash; // Hash tiket lisensi
 };
 
 void playSong(const Song& song);
@@ -41,11 +41,11 @@ class SongList {
         void addSong(Song& song);
         void removeSong(int songId);
         void printSongs();
-        SongNode* searchSong(const string& title);
+        SongNode* searchSong(const std::string& title);
         void sortSongs(bool ascending = true);
         SongNode* getSongNode(int songId);
         Song* getSong(int songId);
-        void playingSong(string& title);
+        void playingSong(std::string& title);
         int getSize();
         SongNode* getHead();
 };

@@ -12,7 +12,7 @@ MerkleTree::~MerkleTree(){
 }
 
 // Metode untuk menambahkan leaf ke dalam tree
-void MerkleTree::addLeaf(string hash)
+void MerkleTree::addLeaf(std::string hash)
 {
     MerkleNode* newLeaf = new MerkleNode();
     newLeaf->hash = hash;
@@ -20,18 +20,18 @@ void MerkleTree::addLeaf(string hash)
 }
 
 // Metode untuk melakukan hashing pada setiap blok data file
-void MerkleTree::hashFileBlock(string file_path)
+void MerkleTree::hashFileBlock(std::string file_path)
 {
     // Buka file dalam mode biner
-    ifstream file(file_path, ios::binary);
+    std::ifstream file(file_path, std::ios::binary);
     if (!file)
     {
-        cerr << "File tidak dapat dibuka!" << endl;
+        std::cerr << "File tidak dapat dibuka!" << std::endl;
         return;
     }
 
     // Baca isi file ke dalam buffer
-    vector<uint8_t> buffer((istreambuf_iterator<char>(file)), istreambuf_iterator<char>());
+    std::vector<uint8_t> buffer((std::istreambuf_iterator<char>(file)), std::istreambuf_iterator<char>());
     file.close();
 
     // Ukuran blok yang diinginkan (misalnya 512 byte)
@@ -42,9 +42,9 @@ void MerkleTree::hashFileBlock(string file_path)
     for (size_t i = 0; i < total_blocks; ++i)
     {
         size_t start = i * block_size;
-        size_t end = min(start + block_size, buffer.size());
+        size_t end = std::min(start + block_size, buffer.size());
         size_t length = end - start;
-        string hash = sha256(buffer.data() + start, length);
+        std::string hash = sha256(buffer.data() + start, length);
         addLeaf(hash);
         // cout << "Block " << i + 1 << " hash: " << hash << endl;
     }
@@ -54,7 +54,7 @@ void MerkleTree::hashFileBlock(string file_path)
 MerkleNode* MerkleTree::buildTree() {
     if (leaves.empty()) return NULL;
 
-    vector<MerkleNode*> level;
+    std::vector<MerkleNode*> level;
     for (const auto& leaf : leaves) {
         MerkleNode* node = new MerkleNode();
         node->hash = leaf->hash;
@@ -62,7 +62,7 @@ MerkleNode* MerkleTree::buildTree() {
     }
 
     while (level.size() > 1) {
-        vector<MerkleNode*> nextLevel;
+        std::vector<MerkleNode*> nextLevel;
         for (size_t i = 0; i < level.size(); i += 2) {
             MerkleNode* parent = new MerkleNode;
             parent->left = level[i];
@@ -75,6 +75,7 @@ MerkleNode* MerkleTree::buildTree() {
     }
 
     root = level.front();
+    return NULL;
 }
 
 // Metode untuk menghitung hash pada setiap node
@@ -91,11 +92,11 @@ void MerkleTree::calculateHash(MerkleNode* node) {
 }
 
 // Metode untuk mengembalikan hash pada root node
-string MerkleTree::getRootHash() {
+std::string MerkleTree::getRootHash() {
     return root->hash;;
 }
 
 // Metode untuk memverifikasi hash
-bool MerkleTree::verifyHash(string hash, string proof) {
+bool MerkleTree::verifyHash(std::string hash, std::string proof) {
     return (hash == proof);
 }

@@ -118,10 +118,10 @@ void compress_block(uint32_t (&H)[8], uint8_t (&block)[64])
 }
 
 // Fungsi utama untuk menghitung hash dari blok data
-string sha256(uint8_t* data, size_t length) {
+std::string sha256(uint8_t* data, size_t length) {
     int size = length;
     int l = (size * 8);
-    vector<uint8_t> message;
+    std::vector<uint8_t> message;
 
     int N = 1;
     if ((l + 64) > 512) {
@@ -156,10 +156,10 @@ string sha256(uint8_t* data, size_t length) {
     return ss.str();
 }
 
-string sha256(string text) {
+std::string sha256(std::string text) {
 	int size = text.size();
 	int l = (size * 8);
-	vector<uint8_t> message;
+	std::vector<uint8_t> message;
 
 	int N = 1;
 	if ((l + 64) > 512) {
