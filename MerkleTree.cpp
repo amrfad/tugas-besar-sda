@@ -52,7 +52,7 @@ void MerkleTree::hashFileBlock(string file_path)
 
 // Metode untuk membangun tree dari daftar leaf
 MerkleNode* MerkleTree::buildTree() {
-    if (leaves.empty()) return nullptr;
+    if (leaves.empty()) return NULL;
 
     vector<MerkleNode*> level;
     for (const auto& leaf : leaves) {

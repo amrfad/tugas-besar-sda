@@ -3,6 +3,8 @@
 
 #include <string>
 #include "MerkleTree.h"
+#include <windows.h>
+#include <mmsystem.h>
 using namespace std;
 
 struct Song {

@@ -1,3 +1,5 @@
+// Sumber: https://github.com/kibonga/sha256-cpp
+
 #include "sha256.h"
 
 const int a = 0;

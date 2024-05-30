@@ -1,7 +1,5 @@
 #include "Song.h"
 #include "MerkleTree.h"
-#include <mmsystem.h>
-#include <windows.h>
 
 SongList::SongList() {
     head = NULL;
@@ -173,5 +171,5 @@ void SongList::playingSong(string& title) {
 
 void playSong(const Song& song) {
     cout << "Playing " << song.title << " by " << song.artist << endl;
-    PlaySound(song.title.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+    // PlaySound(song.title.c_str(), NULL, SND_FILENAME | SND_ASYNC);
 }
