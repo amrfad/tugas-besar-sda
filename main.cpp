@@ -8,7 +8,7 @@
 // using namespace std;
 int main()
 {
-    printMenu();
+    // printMenu();
 
     // Song song1;
     // song1.title = "lagutamat";
@@ -21,5 +21,34 @@ int main()
     // // song1.merkleTree.printBinaryTreeUI();
     // downloadSong("lagutamat");
 
+    // Membuat beberapa objek Song
+    Song song1 = {1, "Safe and Sound", "NCS", "hash1"};
+    calculateHash(&song1);
+    Song song2 = {2, "Sunny", "Yorushika", "hash2"};
+    calculateHash(&song2);
+    Song song3 = {3, "Sway to My Beat in Cosmos", "Robin", "hash3"};
+    calculateHash(&song3);
+
+    // Membuat objek SongList dan menambahkan lagu-lagu
+    SongList songList;
+    songList.addSong(song1);
+    songList.addSong(song2);
+    songList.addSong(song3);
+
+    // Menyimpan SongList ke file biner
+    songList.saveSongListToFile("songs.dat");
+    std::cout << "SongList telah disimpan ke file songs.dat" << std::endl;
+
+    // // Membuat SongList baru dan memuat dari file
+    // SongList loadedSongList;
+    // loadSongListFromFile(loadedSongList, "songs.txt");
+
+    // // Mencetak lagu-lagu yang dimuat dari file
+    // std::cout << "Lagu-lagu yang dimuat dari file:" << std::endl;
+    // SongNode* current = loadedSongList.getHead();
+    // while (current != nullptr) {
+    //     std::cout << "ID: " << current->song.songId << ", Judul: " << current->song.title << ", Artis: " << current->song.artist << ", Hash: " << current->song.hash << std::endl;
+    //     current = current->next;
+    // }
     return 0;
 }

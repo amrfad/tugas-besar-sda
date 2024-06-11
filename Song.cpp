@@ -169,11 +169,34 @@ void SongList::playingSong(std::string& title) {
     }
 }
 
+void calculateHash(Song* song) {
+    song->merkleTree.hashFileBlock(song->title);
+    song->merkleTree.buildTree();
+    song->merkleTree.calculateHash(&(song->merkleTree.root));
+}
+
 void playSong(const Song& song) {
     std::cout << "Playing " << song.title << " by " << song.artist << std::endl;
     std::string FileName = "SimulatedCloud/Song/" + song.title + ".wav";
     PlaySound(FileName.c_str(), NULL, SND_FILENAME | SND_ASYNC);
-    system("pause");
+
+    std::cout << "Lagu sedang dimainkan..." << std::endl;
+    std::cout << "Klik Enter untuk menghentikan lagu..." << std::endl;
+
+    // Loop untuk mendeteksi input keyboard
+    while(true) {
+        if (kbhit()) {  // Jika ada input keyboard
+            int ch = getch();
+            if (ch == 13) {  // 13 adalah kode ASCII untuk Enter
+                PlaySound(NULL, NULL, 0);  // Hentikan lagu
+                break;
+            }
+        }
+        // Tambahkan delay kecil untuk mengurangi penggunaan CPU
+        Sleep(100);  // Delay 100ms, atau sesuaikan sesuai kebutuhan
+    }
+
+    std::cout << "Lagu selesai." << std::endl;
 }
 
 void downloadSong(std::string songName) {
@@ -187,3 +210,63 @@ void downloadSong(std::string songName) {
     else
         std::cerr << "Lagu tidak ditemukan" << std::endl;
 }
+
+// void saveMerkleNode(std::ofstream& file, MerkleNode* node) {
+//     if (node) {
+//         file << node->hash << " ";
+//         saveMerkleNode(file, node->left);
+//         saveMerkleNode(file, node->right);
+//     } else {
+//         file << "null ";
+//     }
+// }
+
+// void saveMerkleTree(std::ofstream& file, const MerkleTree& tree) {
+//     saveMerkleNode(file, tree.root);
+// }
+
+// void SongList::saveSongListToFile(SongList& songList, const std::string& filename) {
+//     std::ofstream file(filename);
+//     SongNode* current = songList.getHead();
+//     while (current != nullptr) {
+//         file << current->song.songId << "|" << current->song.title << "|" << current->song.artist << "|" << current->song.hash << "|";
+//         saveMerkleTree(file, current->song.merkleTree);
+//         file << "\n";
+//         current = current->next;
+//     }
+//     file.close();
+// }
+
+void saveMerkleNode(std::ofstream& file, MerkleNode* node) {
+    if (node) {
+        std::string nodeHash = node->hash;
+        file.write(reinterpret_cast<const char*>(&nodeHash), sizeof(std::string));
+        saveMerkleNode(file, node->left);
+        saveMerkleNode(file, node->right);
+    } else {
+        std::string nullHash = "null";
+        file.write(reinterpret_cast<const char*>(&nullHash), sizeof(std::string));
+    }
+}
+
+void saveMerkleTree(std::ofstream& file, const MerkleTree& tree) {
+    saveMerkleNode(file, tree.root);
+}
+
+void SongList::saveSongListToFile(const std::string& filename) {
+    std::ofstream file(filename, std::ios::binary);
+    SongNode* current = getHead();
+    while (current != nullptr) {
+        file.write(reinterpret_cast<const char*>(&current->song.songId), sizeof(int));
+        std::string title = current->song.title;
+        std::string artist = current->song.artist;
+        std::string hash = current->song.hash;
+        file.write(reinterpret_cast<const char*>(&title), sizeof(std::string));
+        file.write(reinterpret_cast<const char*>(&artist), sizeof(std::string));
+        file.write(reinterpret_cast<const char*>(&hash), sizeof(std::string));
+        saveMerkleTree(file, current->song.merkleTree);
+        current = current->next;
+    }
+    file.close();
+}
+

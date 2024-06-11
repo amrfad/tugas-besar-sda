@@ -6,6 +6,7 @@
 #include <windows.h>
 #include <mmsystem.h>
 #include <conio.h>
+#include <fstream>
 // using namespace std;
 
 struct Song {
@@ -15,6 +16,10 @@ struct Song {
     std::string hash; // Hash lagu
     MerkleTree merkleTree; // Merkle Hash Tree untuk lagu ini
 };
+
+void calculateHash(Song* song);
+void playSong(const Song& song);
+void downloadSong(std::string songName);
 
 struct SongNode {
     Song song;
@@ -28,9 +33,6 @@ struct LicenseTicket {
     std::string expirationDate;
     std::string hash; // Hash tiket lisensi
 };
-
-void playSong(const Song& song);
-void downloadSong(std::string songName);
 
 class SongList {
     private:
@@ -50,5 +52,6 @@ class SongList {
         void playingSong(std::string& title);
         int getSize();
         SongNode* getHead();
+        void saveSongListToFile(const std::string& filename); 
 };
 #endif

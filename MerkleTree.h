@@ -30,9 +30,9 @@ public:
     MerkleTree();
     ~MerkleTree();
     void addLeaf(std::string hash);
-    void hashFileBlock(std::string file_path);
+    void hashFileBlock(std::string song_title);
     MerkleNode *buildTree();
-    void calculateHash(MerkleNode *node);
+    void calculateHash(MerkleNode** node);
     std::string getRootHash();
     bool verifyHash(std::string hash, std::string proof);
     void printBinaryTreeUI();

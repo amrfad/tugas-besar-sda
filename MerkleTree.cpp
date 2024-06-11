@@ -21,8 +21,9 @@ void MerkleTree::addLeaf(std::string hash)
 }
 
 // Metode untuk melakukan hashing pada setiap blok data file
-void MerkleTree::hashFileBlock(std::string file_path)
+void MerkleTree::hashFileBlock(std::string song_title)
 {
+    std::string file_path = "SimulatedCloud/Song/" + song_title + ".wav";
     // Buka file dalam mode biner
     std::ifstream file(file_path, std::ios::binary);
     if (!file)
@@ -80,17 +81,17 @@ MerkleNode* MerkleTree::buildTree() {
 }
 
 // Metode untuk menghitung hash pada setiap node
-void MerkleTree::calculateHash(MerkleNode* node) {
-    if (node == NULL) return;
-    calculateHash(node->left);
-    calculateHash(node->right);
-    if (node->left != NULL && node->right != NULL) {
-        node->hash = sha256(node->left->hash + node->right->hash);
+void MerkleTree::calculateHash(MerkleNode** node) {
+    if (*node == NULL) return;
+    calculateHash(&((*node)->left));
+    calculateHash(&((*node)->right));
+    if ((*node)->left != NULL && (*node)->right != NULL) {
+        (*node)->hash = sha256((*node)->left->hash + (*node)->right->hash);
         // cout << "Hash: " << node->hash << endl;
         // cout << "Left: " << node->left->hash << endl;
         // cout << "Right: " << node->right->hash << endl;
-    } else if (node->left != NULL && node->right == NULL) {
-        node->hash = sha256(node->left->hash);
+    } else if ((*node)->left != NULL && (*node)->right == NULL) {
+        (*node)->hash = sha256((*node)->left->hash);
     }
 }
 
