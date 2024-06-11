@@ -28,7 +28,7 @@ private:
 
 public:
     MerkleTree();
-    ~MerkleTree();
+    // ~MerkleTree();
     void addLeaf(std::string hash);
     void hashFileBlock(std::string song_title);
     MerkleNode *buildTree();

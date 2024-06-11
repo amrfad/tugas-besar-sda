@@ -35,20 +35,24 @@ int main()
     songList.addSong(song2);
     songList.addSong(song3);
 
-    // Menyimpan SongList ke file biner
-    songList.saveSongListToFile("songs.dat");
-    std::cout << "SongList telah disimpan ke file songs.dat" << std::endl;
+    // Menyimpan SongList ke file teks
+    songList.saveSongsToFile("songs.txt");
+    std::cout << "SongList telah disimpan ke file songs.txt" << std::endl;
 
-    // // Membuat SongList baru dan memuat dari file
-    // SongList loadedSongList;
-    // loadSongListFromFile(loadedSongList, "songs.txt");
+    // Membuat SongList baru yang kosong
+    SongList loadedSongList;
 
-    // // Mencetak lagu-lagu yang dimuat dari file
-    // std::cout << "Lagu-lagu yang dimuat dari file:" << std::endl;
-    // SongNode* current = loadedSongList.getHead();
-    // while (current != nullptr) {
-    //     std::cout << "ID: " << current->song.songId << ", Judul: " << current->song.title << ", Artis: " << current->song.artist << ", Hash: " << current->song.hash << std::endl;
-    //     current = current->next;
-    // }
+    // Memuat SongList dari file teks
+    loadedSongList.loadSongsFromFile("songs.txt");
+    std::cout << "SongList telah dimuat dari file songs.txt" << std::endl;
+
+    // Mencetak lagu-lagu yang dimuat dari file
+    std::cout << "Lagu-lagu yang dimuat dari file:" << std::endl;
+    SongNode* current = loadedSongList.getHead();
+    while (current != nullptr) {
+        std::cout << "ID: " << current->song.songId << ", Judul: " << current->song.title << ", Artis: " << current->song.artist << ", Hash: " << current->song.hash << std::endl;
+        current = current->next;
+    }
+
     return 0;
 }

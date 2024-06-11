@@ -7,14 +7,14 @@ SongList::SongList() {
     size = 0;
 }
 
-SongList::~SongList() {
-    SongNode* current = head;
-    while (current != NULL) {
-        SongNode* next = current->next;
-        delete current;
-        current = next;
-    }
-}
+// SongList::~SongList() {
+//     SongNode* current = head;
+//     while (current != NULL) {
+//         SongNode* next = current->next;
+//         delete current;
+//         current = next;
+//     }
+// }
 
 void SongList::addSong(Song& song) {
     SongNode* newNode = new SongNode;
@@ -173,6 +173,7 @@ void calculateHash(Song* song) {
     song->merkleTree.hashFileBlock(song->title);
     song->merkleTree.buildTree();
     song->merkleTree.calculateHash(&(song->merkleTree.root));
+    song->hash = song->merkleTree.getRootHash();
 }
 
 void playSong(const Song& song) {
@@ -237,36 +238,58 @@ void downloadSong(std::string songName) {
 //     file.close();
 // }
 
-void saveMerkleNode(std::ofstream& file, MerkleNode* node) {
-    if (node) {
-        std::string nodeHash = node->hash;
-        file.write(reinterpret_cast<const char*>(&nodeHash), sizeof(std::string));
-        saveMerkleNode(file, node->left);
-        saveMerkleNode(file, node->right);
-    } else {
-        std::string nullHash = "null";
-        file.write(reinterpret_cast<const char*>(&nullHash), sizeof(std::string));
+void SongList::saveSongsToFile(const std::string& filename) {
+    std::ofstream file(filename);
+    if (!file) {
+        std::cout << "Gagal membuka file " << filename << std::endl;
+        return;
     }
-}
 
-void saveMerkleTree(std::ofstream& file, const MerkleTree& tree) {
-    saveMerkleNode(file, tree.root);
-}
-
-void SongList::saveSongListToFile(const std::string& filename) {
-    std::ofstream file(filename, std::ios::binary);
     SongNode* current = getHead();
     while (current != nullptr) {
-        file.write(reinterpret_cast<const char*>(&current->song.songId), sizeof(int));
-        std::string title = current->song.title;
-        std::string artist = current->song.artist;
-        std::string hash = current->song.hash;
-        file.write(reinterpret_cast<const char*>(&title), sizeof(std::string));
-        file.write(reinterpret_cast<const char*>(&artist), sizeof(std::string));
-        file.write(reinterpret_cast<const char*>(&hash), sizeof(std::string));
-        saveMerkleTree(file, current->song.merkleTree);
+        file << current->song.songId << "|" << current->song.title << "|" << current->song.artist << "|" << current->song.hash << "\n";
         current = current->next;
     }
+
     file.close();
 }
 
+
+void SongList::loadSongsFromFile(const std::string& filename) {
+    std::ifstream file(filename);
+    if (!file) {
+        std::cout << "Gagal membuka file " << filename << std::endl;
+        return;
+    }
+
+    // Menghapus semua node yang sudah ada dalam SongList
+    SongNode* current = head;
+    while (current != nullptr) {
+        SongNode* temp = current;
+        current = current->next;
+        delete temp;
+    }
+    head = nullptr;
+    tail = nullptr;
+    size = 0;
+
+    std::string line;
+    while (std::getline(file, line)) {
+        std::istringstream iss(line);
+        std::vector<std::string> tokens;
+        std::string token;
+        while (std::getline(iss, token, '|')) {
+            tokens.push_back(token);
+        }
+        if (tokens.size() >= 4) {
+            Song song;
+            song.songId = std::stoi(tokens[0]);
+            song.title = tokens[1];
+            song.artist = tokens[2];
+            song.hash = tokens[3];
+            addSong(song);
+        }
+    }
+
+    file.close();
+}

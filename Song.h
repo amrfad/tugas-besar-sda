@@ -41,7 +41,7 @@ class SongList {
         int size;
     public:
         SongList();
-        ~SongList();
+        // ~SongList();
         void addSong(Song& song);
         void removeSong(int songId);
         void printSongs();
@@ -52,6 +52,7 @@ class SongList {
         void playingSong(std::string& title);
         int getSize();
         SongNode* getHead();
-        void saveSongListToFile(const std::string& filename); 
+        void saveSongsToFile(const std::string& filename); 
+        void loadSongsFromFile(const std::string& filename);
 };
 #endif
