@@ -7,6 +7,7 @@
 #include <sstream>
 #include <fstream>
 #include <iostream>
+#include <queue>
 #include "sha256.h"
 // using namespace std;
 
@@ -34,6 +35,7 @@ public:
     void calculateHash(MerkleNode *node);
     std::string getRootHash();
     bool verifyHash(std::string hash, std::string proof);
+    void printBinaryTreeUI();
 };
 
 #endif

@@ -1,5 +1,6 @@
 #include "MerkleTree.h"
 
+
 // Metode konstruktor
 MerkleTree::MerkleTree()
 {
@@ -88,6 +89,8 @@ void MerkleTree::calculateHash(MerkleNode* node) {
         // cout << "Hash: " << node->hash << endl;
         // cout << "Left: " << node->left->hash << endl;
         // cout << "Right: " << node->right->hash << endl;
+    } else if (node->left != NULL && node->right == NULL) {
+        node->hash = sha256(node->left->hash);
     }
 }
 
@@ -99,4 +102,48 @@ std::string MerkleTree::getRootHash() {
 // Metode untuk memverifikasi hash
 bool MerkleTree::verifyHash(std::string hash, std::string proof) {
     return (hash == proof);
+}
+
+std::string truncateString(const std::string& str, size_t maxLength) {
+    if (str.length() <= maxLength) {
+        return str;
+    }
+    return str.substr(0, maxLength) + "...";
+}
+
+void printNodeWithIndentation(MerkleNode* node, int level) {
+    std::string indentation(4 * (level - 1), ' ');
+    std::cout << indentation << truncateString(node->hash, 5) << std::endl;
+
+    if (node->left) {
+        std::cout << indentation << "/" << std::endl;
+    }
+    if (node->right) {
+        std::cout << indentation << "\\" << std::endl;
+    }
+}
+
+void MerkleTree::printBinaryTreeUI() {
+    if (!root) {
+        std::cout << "Tree is empty" << std::endl;
+        return;
+    }
+
+    std::queue<std::pair<MerkleNode*, int>> q;
+    q.push({root, 0});
+
+    while (!q.empty()) {
+        MerkleNode* node = q.front().first;
+        int level = q.front().second;
+        q.pop();
+
+        printNodeWithIndentation(node, level);
+
+        if (node->left) {
+            q.push({node->left, level + 1});
+        }
+        if (node->right) {
+            q.push({node->right, level + 1});
+        }
+    }
 }

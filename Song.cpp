@@ -171,5 +171,19 @@ void SongList::playingSong(std::string& title) {
 
 void playSong(const Song& song) {
     std::cout << "Playing " << song.title << " by " << song.artist << std::endl;
-    // PlaySound(song.title.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+    std::string FileName = "SimulatedCloud/Song/" + song.title + ".wav";
+    PlaySound(FileName.c_str(), NULL, SND_FILENAME | SND_ASYNC);
+    system("pause");
+}
+
+void downloadSong(std::string songName) {
+    std::ifstream src("SimulatedCloud/Song/" + songName + ".wav", std::ios::binary);
+    std::ofstream dst("MyDownload/" + songName + ".wav", std::ios::binary);
+
+    dst << src.rdbuf();
+
+    if (src && dst)
+        std::cout << "Lagu berhasil diunduh" << std::endl;
+    else
+        std::cerr << "Lagu tidak ditemukan" << std::endl;
 }

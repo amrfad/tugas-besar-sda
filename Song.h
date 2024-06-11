@@ -5,6 +5,7 @@
 #include "MerkleTree.h"
 #include <windows.h>
 #include <mmsystem.h>
+#include <conio.h>
 // using namespace std;
 
 struct Song {
@@ -29,6 +30,7 @@ struct LicenseTicket {
 };
 
 void playSong(const Song& song);
+void downloadSong(std::string songName);
 
 class SongList {
     private:
