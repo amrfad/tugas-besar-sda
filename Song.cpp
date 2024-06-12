@@ -1,6 +1,8 @@
 #include "Song.h"
 #include "MerkleTree.h"
 
+SongList _SongList = SongList();
+
 SongList::SongList() {
     head = NULL;
     tail = NULL;
@@ -213,9 +215,9 @@ void playSong(const Song& song) {
     std::cout << "Lagu selesai." << std::endl;
 }
 
-void downloadSong(std::string songName, SongList songList) {
+void downloadSong(std::string songName) {
     // verify hash before download
-    Song realSong = songList.searchSong(songName)->song;
+    Song realSong = _SongList.searchSong(songName)->song;
     Song cloudSong = realSong;
     cloudSong.hash = "0";
     calculateHash(&cloudSong, true);
@@ -261,7 +263,8 @@ void downloadSong(std::string songName, SongList songList) {
 //     file.close();
 // }
 
-void SongList::saveSongsToFile(const std::string& filename) {
+void SongList::saveSongsToFile() {
+    std::string filename = "assets/songs.txt";
     std::ofstream file(filename);
     if (!file) {
         std::cout << "Gagal membuka file " << filename << std::endl;
@@ -278,7 +281,8 @@ void SongList::saveSongsToFile(const std::string& filename) {
 }
 
 
-void SongList::loadSongsFromFile(const std::string& filename) {
+void SongList::loadSongsFromFile() {
+    std::string filename = "assets/songs.txt";
     std::ifstream file(filename);
     if (!file) {
         std::cout << "Gagal membuka file " << filename << std::endl;

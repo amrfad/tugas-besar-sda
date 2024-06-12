@@ -14,7 +14,9 @@ int main()
     // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, World") << std::endl;
     // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, Worlds") << std::endl;
 
-    //printMenu();
+    _SongList.loadSongsFromFile();
+
+    printMenu();
 
     // Song song1;
     // song1.title = "lagutamat";
@@ -29,22 +31,19 @@ int main()
 
     // Membuat beberapa objek Song
     // Song song1 = {1, "Safe and Sound", "NCS", "hash1"};
-    // calculateHash(&song1);
+    // calculateHash(&song1, true);
     // Song song2 = {2, "Sunny", "Yorushika", "hash2"};
-    // calculateHash(&song2);
+    // calculateHash(&song2, true);
     // Song song3 = {3, "Sway to My Beat in Cosmos", "Robin", "hash3"};
-    // calculateHash(&song3);
-    // Song song4 = {4, "Sunny", "Yorushika", "hash4"};
-    // calculateHash(&song4);
+    // calculateHash(&song3, true);
 
     // // Membuat objek SongList dan menambahkan lagu-lagu
     // SongList songList;
     // songList.addSong(song1);
     // songList.addSong(song2);
     // songList.addSong(song3);
-    // songList.addSong(song4);
 
-    // Menyimpan SongList ke file teks
+    // // Menyimpan SongList ke file teks
     // songList.saveSongsToFile("assets/songs.txt");
     // std::cout << "SongList telah disimpan ke file songs.txt" << std::endl;
 

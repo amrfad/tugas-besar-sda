@@ -42,12 +42,14 @@ class SongList {
         void playingSong(std::string& title);
         int getSize();
         SongNode* getHead();
-        void saveSongsToFile(const std::string& filename); 
-        void loadSongsFromFile(const std::string& filename);
+        void saveSongsToFile(); 
+        void loadSongsFromFile();
 };
+
+extern SongList _SongList;
 
 void calculateHash(Song* song, bool isCloud);
 void playSong(const Song& song);
-void downloadSong(std::string songName, SongList songList);
+void downloadSong(std::string songName);
 
 #endif

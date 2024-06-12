@@ -8,7 +8,7 @@ void println(std::string text) {
     std::cout << text << std::endl;
 }
 
-void printMenu(SongList songList) {
+void printMenu() {
     println("------------------------------------");
     println("     login Aplikasi Bank Lagu       ");
     println("------------------------------------");
@@ -57,8 +57,8 @@ void printMenu(SongList songList) {
             std::string judul;
             std::getline(std::cin, judul);
             SongList songListTemp;
-            if (songList.searchSong(judul) != NULL) {
-                Song song = songList.searchSong(judul)->song;
+            if (_SongList.searchSong(judul) != NULL) {
+                Song song = _SongList.searchSong(judul)->song;
                 songListTemp.addSong(song);
                 println("Lagu ditemukan.");
                 songListTemp.printSongs();
@@ -102,7 +102,7 @@ void printMenu(SongList songList) {
             std::string judul;
             std::getline(std::cin, judul);
             println("Memulai pengunduhan lagu ...");
-            downloadSong(judul, songList);
+            downloadSong(judul);
             std::string temp;
             std::getline(std::cin, temp);
             system("cls");
@@ -114,7 +114,7 @@ void printMenu(SongList songList) {
             println("Masukkan judul lagu pada direktori MyDownload yang ingin diverifikasi : ");
             std::string judul;
             std::getline(std::cin, judul);
-            if (songList.isHashExist(judul)) {
+            if (_SongList.isHashExist(judul)) {
                 println("Lagu terverifikasi orisinil.");
             } else {
                 println("Lagu tidak terverifikasi orisinil.");
