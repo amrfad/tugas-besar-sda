@@ -8,7 +8,7 @@ void println(std::string text) {
     std::cout << text << std::endl;
 }
 
-void printMenu() {
+void printMenu(User* user) {
     println("------------------------------------");
     println("     login Aplikasi Bank Lagu       ");
     println("------------------------------------");
@@ -28,15 +28,18 @@ void printMenu() {
         println("------------------------------------");
         println("1. Informasi User");
         println("2. Cari Lagu dalam Bank");
-        println("3. Registrasikan Lagu ke Bank");
-        println("4. Memutar Lagu");
-        println("5. Mengunduh Lagu");
-        println("6. Verifikasi Lagu");
-        println("7. Keluar\n");
+        println("3. Cetak Playlist");
+        println("4. Sorting Lagu dalam Playlist");
+        println("5. Registrasikan Lagu ke Bank");
+        println("6. Memutar Lagu");
+        println("7. Mengunduh Lagu");
+        println("8. Verifikasi Lagu");
+        println("9. Keluar\n");
 
         print("Masukkan pilihan anda : ");
         std::cin >> pilihan;
         std::cin.ignore(256, '\n');
+        system("cls");
 
         if (pilihan == 1) {
             println("------------------------------------");
@@ -71,20 +74,38 @@ void printMenu() {
 
         } else if (pilihan == 3) {
             println("------------------------------------");
-            println("    Registrasikan Lagu ke Bank      ");
+            println("           Cetak Playlist            ");
             println("------------------------------------");
-            println("Masukkan path dari lagu yang ingin diregistrasikan : ");
-            std::string path;
-            std::cin >> path;
-            println("Masukkan judul lagu: ");
-            std::string judul;
-            std::cin >> judul;
-            println("Lagu berhasil diregistrasikan.");
+            println("Playlist : ");
+            _SongList.printSongs();
             std::string temp;
             std::getline(std::cin, temp);
             system("cls");
 
         } else if (pilihan == 4) {
+            println("------------------------------------");
+            println("    Sorting Lagu dalam Playlist     ");
+            println("------------------------------------");
+            // println("1. Sorting berdasarkan judul");
+            // println("2. Sorting berdasarkan penyanyi");
+            // println("3. Sorting berdasarkan genre");
+            // println("4. Sorting berdasarkan durasi");
+            // println("5. Kembali");
+            // print("Masukkan pilihan anda : ");
+
+        } else if (pilihan == 5) {
+            println("------------------------------------");
+            println("    Registrasikan Lagu ke Bank      ");
+            println("------------------------------------");
+            println("Masukkan path dari lagu yang ingin diregistrasikan : ");
+            std::string judul;
+            std::cin >> judul;
+            user->registerSong(judul);
+            std::string temp;
+            std::getline(std::cin, temp);
+            system("cls");
+
+        } else if (pilihan == 6) {
             println("------------------------------------");
             println("            Putar Lagu              ");
             println("------------------------------------");
@@ -94,7 +115,7 @@ void printMenu() {
             playSong(song);
             system("cls");
 
-        } else if (pilihan == 5) {
+        } else if (pilihan == 7) {
             println("------------------------------------");
             println("            Unduh Lagu              ");
             println("------------------------------------");
@@ -107,7 +128,7 @@ void printMenu() {
             std::getline(std::cin, temp);
             system("cls");
 
-        } else if (pilihan == 6) {
+        } else if (pilihan == 8) {
             println("------------------------------------");
             println("          Verifikasi Lagu           ");
             println("------------------------------------");
@@ -123,11 +144,11 @@ void printMenu() {
             std::getline(std::cin, temp);
             system("cls");
 
-        } else if (pilihan == 7) {
+        } else if (pilihan == 9) {
             println("Keluar..");
             getch();
-            exit(0);
             system("cls");
+            break;
 
         } else {
             println("Pilihan tidak tersedia");

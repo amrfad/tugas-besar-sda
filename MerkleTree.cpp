@@ -24,17 +24,27 @@ void MerkleTree::addLeaf(std::string hash)
 void MerkleTree::hashFileBlock(std::string song_title, bool isCloud)
 {
     std::string file_path;
+    std::ifstream file;
+
+    // Coba buka file di direktori yang sesuai
     if (isCloud) {
         file_path = "SimulatedCloud/Song/" + song_title + ".wav";
-    } else {
-        file_path = "MyDownload/" + song_title + ".wav";
+        file.open(file_path, std::ios::binary);
     }
 
-    // Buka file dalam mode biner
-    std::ifstream file(file_path, std::ios::binary);
-    if (!file)
+    if (!file.is_open()) {
+        file_path = "MyDownload/" + song_title + ".wav";
+        file.open(file_path, std::ios::binary);
+    }
+
+    if (!file.is_open()) {
+        file_path = "MyFolder/Song/" + song_title + ".wav";
+        file.open(file_path, std::ios::binary);
+    }
+
+    if (!file.is_open())
     {
-        std::cerr << "File tidak dapat dibuka!" << std::endl;
+        std::cerr << "File tidak dapat dibuka: " << file_path << std::endl;
         return;
     }
 
@@ -56,7 +66,7 @@ void MerkleTree::hashFileBlock(std::string song_title, bool isCloud)
         addLeaf(hash);
         // cout << "Block " << i + 1 << " hash: " << hash << endl;
     }
-};
+}
 
 // Metode untuk membangun tree dari daftar leaf
 MerkleNode* MerkleTree::buildTree() {

@@ -20,6 +20,7 @@ struct User
     void setUserName(const std::string &newName);
     std::string getPassword() const;
     void setPassword(const std::string &newPassword);
+    void registerSong(std::string title);
 };
 
 #endif

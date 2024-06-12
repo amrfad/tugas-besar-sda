@@ -237,6 +237,18 @@ void downloadSong(std::string songName) {
         std::cerr << "Lagu tidak ditemukan" << std::endl;
 }
 
+void uploadSong(std::string songName) {
+    std::ifstream src("MyFolder/Song/" + songName + ".wav", std::ios::binary);
+    std::ofstream dst("SimulatedCloud/Song/" + songName + ".wav", std::ios::binary);
+
+    dst << src.rdbuf();
+
+    if (src && dst)
+        std::cout << "Lagu berhasil diunggah" << std::endl;
+    else
+        std::cerr << "Lagu tidak ditemukan" << std::endl;;
+}
+
 // void saveMerkleNode(std::ofstream& file, MerkleNode* node) {
 //     if (node) {
 //         file << node->hash << " ";

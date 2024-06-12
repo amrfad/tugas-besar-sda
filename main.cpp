@@ -3,6 +3,7 @@
 #include <fstream>
 #include <iostream>
 #include "Song.h"
+#include "User.h"
 #include "Menu.h"
 
 // using namespace std;
@@ -14,9 +15,14 @@ int main()
     // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, World") << std::endl;
     // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, Worlds") << std::endl;
 
+    User user;
+    // printLoginMenu(&user);
+
     _SongList.loadSongsFromFile();
 
-    printMenu();
+    printMenu(&user);
+
+    _SongList.saveSongsToFile();
 
     // Song song1;
     // song1.title = "lagutamat";

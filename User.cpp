@@ -38,3 +38,24 @@ std::string User::getPassword() const {
 void User::setPassword(const std::string& newPassword) {
     password = newPassword;
 }
+
+void User::registerSong(std::string title) {
+    std::string songPath = "MyFolder/Song/" + title + ".wav";
+    std::ifstream songFile(songPath, std::ios::binary);
+    if (!songFile) {
+        std::cerr << "File lagu tidak ditemukan" << std::endl;
+        return;
+    }
+    // Membuat objek Song baru
+    Song newSong;
+    newSong.songId = _SongList.getSize() + 1;
+    newSong.title = title;
+    newSong.artist = getUserName();
+    newSong.merkleTree = MerkleTree();
+    calculateHash(&newSong, false);
+    _SongList.addSong(newSong);
+
+    uploadSong(title);
+    
+    songFile.close();
+}

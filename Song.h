@@ -51,5 +51,6 @@ extern SongList _SongList;
 void calculateHash(Song* song, bool isCloud);
 void playSong(const Song& song);
 void downloadSong(std::string songName);
+void uploadSong(std::string songName);
 
 #endif
