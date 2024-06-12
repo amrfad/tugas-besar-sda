@@ -9,15 +9,6 @@ SongList::SongList() {
     size = 0;
 }
 
-// SongList::~SongList() {
-//     SongNode* current = head;
-//     while (current != NULL) {
-//         SongNode* next = current->next;
-//         delete current;
-//         current = next;
-//     }
-// }
-
 void SongList::addSong(Song& song) {
     SongNode* newNode = new SongNode;
     newNode->song = song;
@@ -249,32 +240,6 @@ void uploadSong(std::string songName) {
         std::cerr << "Lagu tidak ditemukan" << std::endl;;
 }
 
-// void saveMerkleNode(std::ofstream& file, MerkleNode* node) {
-//     if (node) {
-//         file << node->hash << " ";
-//         saveMerkleNode(file, node->left);
-//         saveMerkleNode(file, node->right);
-//     } else {
-//         file << "null ";
-//     }
-// }
-
-// void saveMerkleTree(std::ofstream& file, const MerkleTree& tree) {
-//     saveMerkleNode(file, tree.root);
-// }
-
-// void SongList::saveSongListToFile(SongList& songList, const std::string& filename) {
-//     std::ofstream file(filename);
-//     SongNode* current = songList.getHead();
-//     while (current != nullptr) {
-//         file << current->song.songId << "|" << current->song.title << "|" << current->song.artist << "|" << current->song.hash << "|";
-//         saveMerkleTree(file, current->song.merkleTree);
-//         file << "\n";
-//         current = current->next;
-//     }
-//     file.close();
-// }
-
 void SongList::saveSongsToFile() {
     std::string filename = "assets/songs.txt";
     std::ofstream file(filename);
@@ -291,7 +256,6 @@ void SongList::saveSongsToFile() {
 
     file.close();
 }
-
 
 void SongList::loadSongsFromFile() {
     std::string filename = "assets/songs.txt";

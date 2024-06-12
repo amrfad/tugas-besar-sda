@@ -8,10 +8,9 @@
 class UserManager {
 private:
     std::vector<User> users;
-    std::string userFilePath;
+    std::string userFilePath = "assets/users.txt";
 
     void loadUsersFromFile();
-    void saveUsersToFile();
 
 public:
     UserManager();
@@ -19,7 +18,8 @@ public:
     void registerUser(const std::string& name, const std::string& password);
     User* loginUser(const std::string& name, const std::string& password);
     void logoutUser(User& user);
-    void addDownloadedSong(User& user, const Song& song);
+    void addDownloadedSong(User &user, std::string song);
+    void saveUsersToFile();
 };
 
 #endif // USERMANAGER_H

@@ -7,11 +7,6 @@ MerkleTree::MerkleTree()
     root = NULL;
 }
 
-// // Metode destruktor
-// MerkleTree::~MerkleTree(){
-//     delete root;
-// }
-
 // Metode untuk menambahkan leaf ke dalam tree
 void MerkleTree::addLeaf(std::string hash)
 {

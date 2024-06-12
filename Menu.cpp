@@ -8,19 +8,62 @@ void println(std::string text) {
     std::cout << text << std::endl;
 }
 
-void printMenu(User* user) {
+void printLoginMenu(UserManager* userManager) {
+    
     println("------------------------------------");
-    println("     login Aplikasi Bank Lagu       ");
+    println("       Aplikasi Bank Lagu           ");
     println("------------------------------------");
-    print("Masukkan UID : ");
-    std::string uid;
-    std::cin >> uid;
-    print("Masukkan Password : ");
-    std::string pass;
-    std::cin >> pass;
+    println("1. Login");
+    println("2. Register");
+    println("3. Keluar");
+    print("Masukkan pilihan anda: ");
+    int choice;
+    std::cin >> choice;
+    std::cin.ignore(256, '\n');
 
+    switch (choice) {
+        case 1: {
+            print("Masukkan Username: ");
+            std::string username;
+            std::getline(std::cin, username);
+            print("Masukkan Password: ");
+            std::string password;
+            std::getline(std::cin, password);
+
+            User* user = userManager->loginUser(username, password);
+            if (user) {
+                system("cls");
+                printMainMenu(userManager, user);
+            } else {
+                println("Username atau password salah");
+                getch();
+                system("cls");
+            }
+            break;
+        }
+        case 2: {
+            print("Masukkan Username: ");
+            std::string username;
+            std::getline(std::cin, username);
+            print("Masukkan Password: ");
+            std::string password;
+            std::getline(std::cin, password);
+
+            userManager->registerUser(username, password);
+            println("Registrasi berhasil");
+            getch();
+            system("cls");
+            break;
+        }
+        case 3: {
+            system("cls");
+            exit(0);
+        }
+    }
+}
+
+void printMainMenu(UserManager* userManager, User* user) {
     system("cls");
-
     while (true) {
         int pilihan;
         println("------------------------------------");
@@ -45,9 +88,13 @@ void printMenu(User* user) {
             println("------------------------------------");
             println("          Informasi User            ");
             println("------------------------------------");
-            println("User ID : 000023");
-            println("Nama : Jake Hashmap");
-            println("Lisensi dimiliki : S00034, S00006, S00286");
+            println("User ID : " + std::to_string(user->getUserId()));
+            println("Nama : " + user->getUserName());
+            println("Lagu yang diunduh : ");
+            if (!user->downloadedSongs.empty())
+            for (const auto& song : user->downloadedSongs) {
+                println(song);
+            }
             std::string temp;
             std::getline(std::cin, temp);
             system("cls");
@@ -86,12 +133,23 @@ void printMenu(User* user) {
             println("------------------------------------");
             println("    Sorting Lagu dalam Playlist     ");
             println("------------------------------------");
-            // println("1. Sorting berdasarkan judul");
-            // println("2. Sorting berdasarkan penyanyi");
-            // println("3. Sorting berdasarkan genre");
-            // println("4. Sorting berdasarkan durasi");
-            // println("5. Kembali");
-            // print("Masukkan pilihan anda : ");
+            println("Pilih metode sorting : ");
+            println("1. Ascending");
+            println("2. Descending");
+            print("Masukkan pilihan anda : ");
+            int choice;
+            std::cin >> choice;
+            std::cin.ignore(256, '\n');
+            if (choice == 1) {
+                _SongList.sortSongs(true);
+            } else if (choice == 2) {
+                _SongList.sortSongs(false);
+            } else {
+                println("Pilihan tidak tersedia");
+            }
+            std::string temp;
+            std::getline(std::cin, temp);
+            system("cls");
 
         } else if (pilihan == 5) {
             println("------------------------------------");
@@ -123,7 +181,10 @@ void printMenu(User* user) {
             std::string judul;
             std::getline(std::cin, judul);
             println("Memulai pengunduhan lagu ...");
-            downloadSong(judul);
+            if (_SongList.searchSong(judul) != NULL) {
+                println("Memeriksa keaslian lagu ...");
+                userManager->addDownloadedSong(*user, judul);
+            }
             std::string temp;
             std::getline(std::cin, temp);
             system("cls");
