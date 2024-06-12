@@ -76,6 +76,19 @@ SongNode* SongList::searchSong(const std::string& title) {
     return NULL;
 }
 
+bool SongList::isHashExist(std::string title) {
+    Song localSong = {0, title, "0", "0"};
+    calculateHash(&localSong, false);
+    SongNode* current = head;
+    while (current != NULL) {
+        if (localSong.merkleTree.verifyHash(current->song.hash)) {
+            return true;
+        }
+        current = current->next;
+    }
+    return false;
+}
+
 void SongList::sortSongs(bool ascending) {
     if (size <= 1) {
         return;
@@ -169,8 +182,8 @@ void SongList::playingSong(std::string& title) {
     }
 }
 
-void calculateHash(Song* song) {
-    song->merkleTree.hashFileBlock(song->title);
+void calculateHash(Song* song, bool isCloud) {
+    song->merkleTree.hashFileBlock(song->title, isCloud);
     song->merkleTree.buildTree();
     song->merkleTree.calculateHash(&(song->merkleTree.root));
     song->hash = song->merkleTree.getRootHash();
@@ -200,7 +213,17 @@ void playSong(const Song& song) {
     std::cout << "Lagu selesai." << std::endl;
 }
 
-void downloadSong(std::string songName) {
+void downloadSong(std::string songName, SongList songList) {
+    // verify hash before download
+    Song realSong = songList.searchSong(songName)->song;
+    Song cloudSong = realSong;
+    cloudSong.hash = "0";
+    calculateHash(&cloudSong, true);
+    if (realSong.hash != cloudSong.hash) {
+        std::cout << "Lagu tidak valid. Tidak dapat diunduh." << std::endl;
+        return;
+    }
+
     std::ifstream src("SimulatedCloud/Song/" + songName + ".wav", std::ios::binary);
     std::ofstream dst("MyDownload/" + songName + ".wav", std::ios::binary);
 

@@ -21,9 +21,15 @@ void MerkleTree::addLeaf(std::string hash)
 }
 
 // Metode untuk melakukan hashing pada setiap blok data file
-void MerkleTree::hashFileBlock(std::string song_title)
+void MerkleTree::hashFileBlock(std::string song_title, bool isCloud)
 {
-    std::string file_path = "SimulatedCloud/Song/" + song_title + ".wav";
+    std::string file_path;
+    if (isCloud) {
+        file_path = "SimulatedCloud/Song/" + song_title + ".wav";
+    } else {
+        file_path = "MyDownload/" + song_title + ".wav";
+    }
+
     // Buka file dalam mode biner
     std::ifstream file(file_path, std::ios::binary);
     if (!file)
@@ -101,8 +107,8 @@ std::string MerkleTree::getRootHash() {
 }
 
 // Metode untuk memverifikasi hash
-bool MerkleTree::verifyHash(std::string hash, std::string proof) {
-    return (hash == proof);
+bool MerkleTree::verifyHash(std::string proof) {
+    return (getRootHash() == proof);
 }
 
 std::string truncateString(const std::string& str, size_t maxLength) {

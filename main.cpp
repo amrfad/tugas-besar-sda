@@ -8,7 +8,13 @@
 // using namespace std;
 int main()
 {
-    // printMenu();
+    // Hash string "Hello, World!"
+    // Song song1 = {1, }
+    // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello World!") << std::endl;
+    // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, World") << std::endl;
+    // std::cout << "Hash string \"Hello, World!\": " << sha256("Hello, Worlds") << std::endl;
+
+    //printMenu();
 
     // Song song1;
     // song1.title = "lagutamat";
@@ -22,37 +28,40 @@ int main()
     // downloadSong("lagutamat");
 
     // Membuat beberapa objek Song
-    Song song1 = {1, "Safe and Sound", "NCS", "hash1"};
-    calculateHash(&song1);
-    Song song2 = {2, "Sunny", "Yorushika", "hash2"};
-    calculateHash(&song2);
-    Song song3 = {3, "Sway to My Beat in Cosmos", "Robin", "hash3"};
-    calculateHash(&song3);
+    // Song song1 = {1, "Safe and Sound", "NCS", "hash1"};
+    // calculateHash(&song1);
+    // Song song2 = {2, "Sunny", "Yorushika", "hash2"};
+    // calculateHash(&song2);
+    // Song song3 = {3, "Sway to My Beat in Cosmos", "Robin", "hash3"};
+    // calculateHash(&song3);
+    // Song song4 = {4, "Sunny", "Yorushika", "hash4"};
+    // calculateHash(&song4);
 
-    // Membuat objek SongList dan menambahkan lagu-lagu
-    SongList songList;
-    songList.addSong(song1);
-    songList.addSong(song2);
-    songList.addSong(song3);
+    // // Membuat objek SongList dan menambahkan lagu-lagu
+    // SongList songList;
+    // songList.addSong(song1);
+    // songList.addSong(song2);
+    // songList.addSong(song3);
+    // songList.addSong(song4);
 
     // Menyimpan SongList ke file teks
-    songList.saveSongsToFile("songs.txt");
-    std::cout << "SongList telah disimpan ke file songs.txt" << std::endl;
+    // songList.saveSongsToFile("assets/songs.txt");
+    // std::cout << "SongList telah disimpan ke file songs.txt" << std::endl;
 
-    // Membuat SongList baru yang kosong
-    SongList loadedSongList;
+    // // Membuat SongList baru yang kosong
+    // SongList loadedSongList;
 
-    // Memuat SongList dari file teks
-    loadedSongList.loadSongsFromFile("songs.txt");
-    std::cout << "SongList telah dimuat dari file songs.txt" << std::endl;
+    // // Memuat SongList dari file teks
+    // loadedSongList.loadSongsFromFile("songs.txt");
+    // std::cout << "SongList telah dimuat dari file songs.txt" << std::endl;
 
-    // Mencetak lagu-lagu yang dimuat dari file
-    std::cout << "Lagu-lagu yang dimuat dari file:" << std::endl;
-    SongNode* current = loadedSongList.getHead();
-    while (current != nullptr) {
-        std::cout << "ID: " << current->song.songId << ", Judul: " << current->song.title << ", Artis: " << current->song.artist << ", Hash: " << current->song.hash << std::endl;
-        current = current->next;
-    }
+    // // Mencetak lagu-lagu yang dimuat dari file
+    // std::cout << "Lagu-lagu yang dimuat dari file:" << std::endl;
+    // SongNode* current = loadedSongList.getHead();
+    // while (current != nullptr) {
+    //     std::cout << "ID: " << current->song.songId << ", Judul: " << current->song.title << ", Artis: " << current->song.artist << ", Hash: " << current->song.hash << std::endl;
+    //     current = current->next;
+    // }
 
     return 0;
 }

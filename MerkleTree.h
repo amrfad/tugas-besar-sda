@@ -8,6 +8,7 @@
 #include <fstream>
 #include <iostream>
 #include <queue>
+#include <stdbool.h>
 #include "sha256.h"
 // using namespace std;
 
@@ -30,11 +31,11 @@ public:
     MerkleTree();
     // ~MerkleTree();
     void addLeaf(std::string hash);
-    void hashFileBlock(std::string song_title);
+    void hashFileBlock(std::string song_title, bool isCloud);
     MerkleNode *buildTree();
     void calculateHash(MerkleNode** node);
     std::string getRootHash();
-    bool verifyHash(std::string hash, std::string proof);
+    bool verifyHash(std::string proof);
     void printBinaryTreeUI();
 };
 

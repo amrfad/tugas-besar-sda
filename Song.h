@@ -7,6 +7,7 @@
 #include <mmsystem.h>
 #include <conio.h>
 #include <fstream>
+#include <stdbool.h>
 // using namespace std;
 
 struct Song {
@@ -17,21 +18,9 @@ struct Song {
     MerkleTree merkleTree; // Merkle Hash Tree untuk lagu ini
 };
 
-void calculateHash(Song* song);
-void playSong(const Song& song);
-void downloadSong(std::string songName);
-
 struct SongNode {
     Song song;
     SongNode* next;
-};
-
-struct LicenseTicket {
-    int songId;
-    int userId;
-    std::string purchaseDate;
-    std::string expirationDate;
-    std::string hash; // Hash tiket lisensi
 };
 
 class SongList {
@@ -46,6 +35,7 @@ class SongList {
         void removeSong(int songId);
         void printSongs();
         SongNode* searchSong(const std::string& title);
+        bool isHashExist(std::string title);
         void sortSongs(bool ascending = true);
         SongNode* getSongNode(int songId);
         Song* getSong(int songId);
@@ -55,4 +45,9 @@ class SongList {
         void saveSongsToFile(const std::string& filename); 
         void loadSongsFromFile(const std::string& filename);
 };
+
+void calculateHash(Song* song, bool isCloud);
+void playSong(const Song& song);
+void downloadSong(std::string songName, SongList songList);
+
 #endif

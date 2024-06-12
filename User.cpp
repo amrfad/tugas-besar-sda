@@ -38,23 +38,3 @@ std::string User::getPassword() const {
 void User::setPassword(const std::string& newPassword) {
     password = newPassword;
 }
-
-// Fungsi untuk mendapatkan daftar lisensi yang dimiliki pengguna
-const std::vector<LicenseTicket>& User::getLicenses() const {
-    return licenses;
-}
-
-// Fungsi untuk menambahkan lisensi baru ke daftar lisensi pengguna
-void User::addLicense(const LicenseTicket& license) {
-    licenses.push_back(license);
-}
-
-// Fungsi untuk menghapus lisensi dari daftar lisensi pengguna berdasarkan ID lagu dan ID pengguna
-void User::removeLicense(int songId, int userId) {
-    for (auto it = licenses.begin(); it != licenses.end(); ++it) {
-        if (it->songId == songId && it->userId == userId) {
-            licenses.erase(it);
-            break;
-        }
-    }
-}
